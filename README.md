@@ -51,8 +51,8 @@ A modern full-stack application for managing employee data with authentication, 
 
 ```shellscript
 # Clone the repository
-git clone https://github.com/yourusername/employee-management-system.git
-cd employee-management-system
+git clone https://github.com/Harrybandukda/101451857_comp3133_assignment2
+cd 101451857_comp3133_assignment2
 
 # Install backend dependencies
 cd backend
@@ -131,25 +131,6 @@ The backend provides a GraphQL API with the following main operations:
 5. Edit existing employee details
 6. Delete employees
 
-
-
-
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ---
 
-Made with ❤️ by Your Name
+Made with ❤️ by Mo Harry Bandukda
