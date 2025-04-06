@@ -1,20 +1,20 @@
-// src/app/services/employee.service.ts
-import { Injectable, inject } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { gql } from 'apollo-angular';
-import { Employee } from '../models/employee.model';
+import { Apollo } from "apollo-angular";
+import { throwError, type Observable } from "rxjs";
+import { map, catchError } from "rxjs/operators";
+import { gql } from "apollo-angular";
+import type { Employee } from "../models/employee.model";
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class EmployeeService {
   constructor(private apollo: Apollo) {}
 
   getEmployees(): Observable<Employee[]> {
-    return this.apollo.query<{ getEmployees: Employee[] }>({
-      query: gql`
+    return this.apollo
+      .query<{ getEmployees: Employee[] }>({
+        query: gql`
         query GetEmployees {
           getEmployees {
             id
@@ -28,16 +28,18 @@ export class EmployeeService {
             profilePicture
           }
         }
-      `
-    }).pipe(
-      map(result => result.data.getEmployees),
-      catchError(error => throwError(() => error))
-    );
+      `,
+      })
+      .pipe(
+        map((result) => result.data.getEmployees),
+        catchError((error) => throwError(() => error)),
+      );
   }
 
   getEmployee(id: string): Observable<Employee> {
-    return this.apollo.query<{ getEmployee: Employee }>({
-      query: gql`
+    return this.apollo
+      .query<{ getEmployee: Employee }>({
+        query: gql`
         query GetEmployee($id: ID!) {
           getEmployee(id: $id) {
             id
@@ -52,16 +54,28 @@ export class EmployeeService {
           }
         }
       `,
-      variables: { id }
-    }).pipe(
-      map(result => result.data.getEmployee),
-      catchError(error => throwError(() => error))
-    );
+        variables: { id },
+      })
+      .pipe(
+        map((result) => result.data.getEmployee),
+        catchError((error) => throwError(() => error)),
+      );
   }
 
   searchEmployees(department?: string, position?: string): Observable<Employee[]> {
-    return this.apollo.query<{ searchEmployees: Employee[] }>({
-      query: gql`
+    const variables: any = {};
+
+    if (department) {
+      variables.department = department;
+    }
+
+    if (position) {
+      variables.position = position;
+    }
+
+    return this.apollo
+      .query<{ searchEmployees: Employee[] }>({
+        query: gql`
         query SearchEmployees($department: String, $position: String) {
           searchEmployees(department: $department, position: $position) {
             id
@@ -76,16 +90,18 @@ export class EmployeeService {
           }
         }
       `,
-      variables: { department, position }
-    }).pipe(
-      map(result => result.data.searchEmployees),
-      catchError(error => throwError(() => error))
-    );
+        variables: variables,
+      })
+      .pipe(
+        map((result) => result.data.searchEmployees),
+        catchError((error) => throwError(() => error)),
+      );
   }
 
   addEmployee(employee: Partial<Employee>): Observable<Employee> {
-    return this.apollo.mutate<{ addEmployee: Employee }>({
-      mutation: gql`
+    return this.apollo
+      .mutate<{ addEmployee: Employee }>({
+        mutation: gql`
         mutation AddEmployee(
           $firstName: String!
           $lastName: String!
@@ -118,16 +134,18 @@ export class EmployeeService {
           }
         }
       `,
-      variables: employee
-    }).pipe(
-      map(result => result.data!.addEmployee),
-      catchError(error => throwError(() => error))
-    );
+        variables: employee,
+      })
+      .pipe(
+        map((result) => result.data!.addEmployee),
+        catchError((error) => throwError(() => error)),
+      );
   }
 
   updateEmployee(employee: Partial<Employee>): Observable<Employee> {
-    return this.apollo.mutate<{ updateEmployee: Employee }>({
-      mutation: gql`
+    return this.apollo
+      .mutate<{ updateEmployee: Employee }>({
+        mutation: gql`
         mutation UpdateEmployee(
           $id: ID!
           $firstName: String
@@ -162,26 +180,29 @@ export class EmployeeService {
           }
         }
       `,
-      variables: employee
-    }).pipe(
-      map(result => result.data!.updateEmployee),
-      catchError(error => throwError(() => error))
-    );
+        variables: employee,
+      })
+      .pipe(
+        map((result) => result.data!.updateEmployee),
+        catchError((error) => throwError(() => error)),
+      );
   }
 
   deleteEmployee(id: string): Observable<Employee> {
-    return this.apollo.mutate<{ deleteEmployee: Employee }>({
-      mutation: gql`
+    return this.apollo
+      .mutate<{ deleteEmployee: Employee }>({
+        mutation: gql`
         mutation DeleteEmployee($id: ID!) {
           deleteEmployee(id: $id) {
             id
           }
         }
       `,
-      variables: { id }
-    }).pipe(
-      map(result => result.data!.deleteEmployee),
-      catchError(error => throwError(() => error))
-    );
+        variables: { id },
+      })
+      .pipe(
+        map((result) => result.data!.deleteEmployee),
+        catchError((error) => throwError(() => error)),
+      );
   }
 }
