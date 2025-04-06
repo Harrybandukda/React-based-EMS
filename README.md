@@ -1,4 +1,4 @@
-### COMP3133 Assignment Two
+# COMP3133 Assignment Two
 
 A modern full-stack application for managing employee data with authentication, search functionality, and CRUD operations.
 
