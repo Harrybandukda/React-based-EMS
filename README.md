@@ -1,4 +1,4 @@
-# COMP3133 Assignment Two
+# React Based Employee Management System (EMS)
 
 A modern full-stack application for managing employee data with authentication, search functionality, and CRUD operations.
 
